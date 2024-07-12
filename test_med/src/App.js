@@ -29,7 +29,7 @@ function App() {
                 <Route path ="/signup" element={<Sign_Up/>} />
                 <Route path ="/login" element={<Login/>} />
                 <Route path ="/navbar" element={<Navbar/>} />
-                <Route path="/instant-consultation" element={<InstantConsultation />} />
+                <Route path="/InstantConsultation" element={<InstantConsultation />} />
               </Routes>
         </BrowserRouter>
     </div>
