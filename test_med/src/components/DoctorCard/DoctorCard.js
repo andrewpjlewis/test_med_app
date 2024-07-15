@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 const DoctorCard = ({ name, speciality, experience, ratings, profilePic, careerProfile }) => {
   const [showModal, setShowModal] = useState(false);
   const [appointments, setAppointments] = useState([]);
+  const [isBooked, setIsBooked] = useState(false);
 
   const handleBooking = () => {
     setShowModal(true);
@@ -16,6 +17,7 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic, careerP
   const handleCancel = (appointmentId) => {
     const updatedAppointments = appointments.filter((appointment) => appointment.id !== appointmentId);
     setAppointments(updatedAppointments);
+    setIsBooked(false);
   };
 
   const handleFormSubmit = (appointmentData) => {
@@ -25,6 +27,7 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic, careerP
     };
     setAppointments([...appointments, newAppointment]);
     setShowModal(false);
+    setIsBooked(true);
   };
 
   return (
@@ -46,8 +49,11 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic, careerP
           <div className="doctor-card-detail-ratings">Ratings: {ratings}</div>
           <div className="doctor-card-detail-career-profile">{careerProfile}</div>
           <div>
-            <button className="book-appointment-btn" onClick={handleBooking}>
-              <div>Book Appointment</div>
+            <button
+              className={`book-appointment-btn ${isBooked ? 'booked' : ''}`}
+              onClick={handleBooking}
+            >
+              <div>{isBooked ? 'Cancel Appointment' : 'Book Appointment'}</div>
               <div>No Booking Fee</div>
             </button>
           </div>
@@ -56,7 +62,6 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic, careerP
       <div className="doctor-card-options-container">
         <Popup
           style={{ backgroundColor: '#FFFFFF' }}
-          trigger={<button className="hidden-trigger" />}
           modal
           open={showModal}
           onClose={() => setShowModal(false)}
@@ -89,6 +94,8 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic, careerP
                     <div className="booked-info" key={appointment.id}>
                       <p>Name: {appointment.name}</p>
                       <p>Phone Number: {appointment.phoneNumber}</p>
+                      <p>Date: {appointment.date}</p>
+                      <p>Time Slot: {appointment.selectedSlot}</p>
                       <button onClick={() => handleCancel(appointment.id)}>Cancel Appointment</button>
                     </div>
                   ))}

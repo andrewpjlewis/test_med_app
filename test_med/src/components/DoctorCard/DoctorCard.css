@@ -183,6 +183,10 @@ button:hover {
   background-color: #0056b3;
 }
 
+.book-appointment-btn.booked {
+  background-color: red; /* Color when booked */
+}
+
 
 .btnslot{
   background-color: green;
